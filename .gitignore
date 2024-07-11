@@ -1,5 +1,4 @@
 
 config.py
-/.venv
-/__pycache__
-__pycache__/config.cpython-310.pyc
+.venv
+__pycache__

@@ -17,8 +17,9 @@
 Опробовать бота вы можете добавив его на свой Discord по ссылке:
 https://discord.com/oauth2/authorize?client_id=1259771930324631654&permissions=274880006144&integration_type=0&scope=bot
 
+# Обратите внимание, что для работы бота требуется:
+1) Программа FFmpeg
+2) Фикс для библиотеки pylib (https://github.com/pytube/pytube/pull/1956)
+3) Библиотеки, прописанные в requirements.txt
 
-Требуемые библиотеки приписаны в requirements.txt
-Обратите внимание, что для работы бота требуется программа FFmpeg
-
-special thanks to CreativeeBlackWolf
+Special thanks to CreativeeBlackWolf

@@ -19,7 +19,7 @@ https://discord.com/oauth2/authorize?client_id=1259771930324631654&permissions=2
 
 # Обратите внимание, что для работы бота требуется:
 1) Программа FFmpeg
-2) Фикс для библиотеки pylib (https://github.com/pytube/pytube/pull/1956)
+2) Фикс для библиотеки pytube (https://github.com/pytube/pytube/pull/1956)
 3) Библиотеки, прописанные в requirements.txt
 
 Special thanks to CreativeeBlackWolf

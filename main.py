@@ -2,6 +2,7 @@ import discord
 import asyncio
 import random
 import yt_dlp as youtube_dl
+import os
 
 from discord.utils import get
 from pytube import YouTube
@@ -14,46 +15,6 @@ bot = commands.Bot(command_prefix = settings['prefix'], intents=discord.Intents.
 
 
 #---------------------------------------
-#          ТЕКСТОВЫЙ ФУНКЦИОНАЛ
-#---------------------------------------
-
-
-
-# @bot.command()
-# async def ping(ctx):
-#     await ctx.send(f'Я здесь!')
-
-# @bot.command() 
-# async def hello(ctx):
-#     author = ctx.message.author
-#     await ctx.send(f'Привет, {author.mention}!')
-
-# @bot.command()
-# async def roll(ctx, min_num=None, max_num=None, another=None): 
-#     author = ctx.message.author 
-#     if another is None:
-#         if min_num is None or max_num is None:
-#             await ctx.send(f'{author.mention}, пожалуйста, вместе с командой вводи минимальное и максимальное число (например: !roll {random.randint(0, 17)} {random.randint(18, 49)})')
-#             return
-#         try:
-#             min_num = int(min_num)
-#             max_num = int(max_num)
-#             if min_num>max_num:
-#                 temp = min_num
-#                 min_num = max_num
-#                 max_num = temp
-#         except ValueError:
-#             await ctx.send(f'{author.mention}, пожалуйста, введи нормальные числа')
-#             return
-        
-#         random_number = random.randint(min_num, max_num)
-#         await ctx.send(f'{author.mention}, Твоё число в диапазоне от {min_num} до {max_num} = {random_number}') 
-#     else:
-#         await ctx.send(f'{author.mention}, Пожалуйста, введи только 2 числа')
-
-
-
-#---------------------------------------
 #        ЗВУКОВОЙ ФУНКЦИОНАЛ
 #---------------------------------------
 
@@ -61,14 +22,14 @@ bot = commands.Bot(command_prefix = settings['prefix'], intents=discord.Intents.
 
 @bot.command()
 async def play(ctx, url):
+    save_path = settings['wd'] + ctx.guild.name + '/'
+    os.makedirs(save_path, exist_ok=True)
     if ctx.author.voice is None:
         await ctx.send("Вы не подключены к голосовому каналу")
         return
-        
     author = ctx.message.author
     voice_channel = author.voice.channel
     await ctx.send(f'Погодите секунду, сейчас загружу')
-    save_path = 'C:/pyvids'
     yt = YouTube(url)
     video = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
     video.download(output_path=save_path, filename='tryme.mp4')
@@ -79,7 +40,7 @@ async def play(ctx, url):
     else:
         vc = voice_client
         vc.stop()    
-    vc.play(discord.FFmpegPCMAudio(settings['wd']))
+    vc.play(discord.FFmpegPCMAudio(save_path + 'tryme.mp4'))
     await ctx.send(f'Готово!')
     while vc.is_playing():
         await asyncio.sleep(1)
@@ -88,6 +49,7 @@ async def play(ctx, url):
 
 @bot.command()
 async def restart(ctx):
+    save_path = settings['wd'] + ctx.guild.name + '/'
     if ctx.author.voice is None:
         await ctx.send("Вы не подключены к голосовому каналу")
         return
@@ -99,7 +61,7 @@ async def restart(ctx):
     else:
         vc = voice_client
         vc.stop()    
-    vc.play(discord.FFmpegPCMAudio(settings['wd']))
+    vc.play(discord.FFmpegPCMAudio(save_path + 'tryme.mp4'))
     await ctx.send(f'Без проблем, запускаю ещё раз!')
     while vc.is_playing():
         await asyncio.sleep(1)
